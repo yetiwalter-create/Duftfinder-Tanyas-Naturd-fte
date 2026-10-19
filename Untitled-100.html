@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Individueller Duftfinder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f5f3f0;
+      padding: 16px;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.5;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    #quiz.blur {
+      filter: blur(6px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .question {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: #fff;
+      border-radius: 12px;
+    }
+
+    .question strong {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      padding: 10px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: background 0.15s ease;
+    }
+
+    label:hover {
+      background: #f0f0f0;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+      transform: scale(1.1);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    button.primary {
+      background: #ff6766;
+      color: #fff;
+    }
+
+    button.secondary {
+      background: #ddd;
+      color: #333;
+    }
+
+    #result {
+      position: fixed;
+      left: 50%;
+      bottom: 32px;
+      transform: translateX(-50%) translateY(120%);
+      width: calc(100% - 32px);
+      max-width: 700px;
+      padding: 24px;
+      background: #ff6766;
+      color: white;
+      border-radius: 16px;
+      z-index: 999;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.7s ease, opacity 0.4s ease;
+    }
+
+    #result.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #result ul {
+      padding-left: 18px;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 22px; }
+      .question { padding: 14px; }
+      button { font-size: 15px; }
+      #result { padding: 18px; border-radius: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Finde deinen Duft</h1>
+
+<form id="quiz">
+
+  <!-- Frage 1 -->
+  <div class="question">
+    <strong>1. Welche Stimmung zieht dich an?</strong><br>
+    <label><input type="radio" name="q1" value="1"> Ungewöhnlich und geheimnisvoll</label><br>
+    <label><input type="radio" name="q1" value="2"> Kraftvoll und erotisierend</label><br>
+    <label><input type="radio" name="q1" value="3"> Feminin, romantisch und zart</label><br>
+    <label><input type="radio" name="q1" value="1"> Facettenreich und hell</label><br>
+    <label><input type="radio" name="q1" value="2"> Exotisch und sinnlich</label><br>
+    <label><input type="radio" name="q1" value="4"> Magisch und erhebend</label><br>
+    <label><input type="radio" name="q1" value="1"> Mit meiner Kraft verbindend</label><br>
+    <label><input type="radio" name="q1" value="5"> Eigenwillig und erfrischend</label><br>
+    <label><input type="radio" name="q1" value="3"> Einladend, verspielt und weiblich</label><br>
+    <label><input type="radio" name="q1" value="6"> Geborgen, kraftvoll und tiefgründig</label>
+  </div>
+
+  <!-- Frage 2 -->
+  <div class="question">
+    <strong>2. Welche Duftrichtung zieht dich an?</strong><br>
+    <label><input type="radio" name="q2" value="1"> Aromatisch</label><br>
+    <label><input type="radio" name="q2" value="2"> Orientalisch</label><br>
+    <label><input type="radio" name="q2" value="3"> Blumig</label><br>
+    <label><input type="radio" name="q2" value="4"> Zitrisch</label><br>
+    <label><input type="radio" name="q2" value="5"> Chypre</label><br>
+    <label><input type="radio" name="q2" value="6"> Holzig</label>
+  </div>
+
+  <!-- Frage 3 -->
+  <div class="question">
+    <strong>3. Welches Naturerlebnis schwebt dir vor?</strong><br>
+    <label><input type="radio" name="q3" value="1"> Vollmond bei Meeresbrise</label><br>
+    <label><input type="radio" name="q3" value="2"> Gewürzbasar mit Geranien</label><br>
+    <label><input type="radio" name="q3" value="3"> Rosen an tiefblauem See</label><br>
+    <label><input type="radio" name="q3" value="1"> Spaziergang auf Hawaii</label><br>
+    <label><input type="radio" name="q3" value="2"> Endlose Felder und Holzveranden</label><br>
+    <label><input type="radio" name="q3" value="4"> Sommernacht unter Sternenhimmel</label><br>
+    <label><input type="radio" name="q3" value="1"> Wüstenwind mit Gewürzen & Rose</label><br>
+    <label><input type="radio" name="q3" value="5"> Heißer Sommertag am Mittelmeer</label><br>
+    <label><input type="radio" name="q3" value="3"> Frühlingsspaziergang mit Erinnerungen</label><br>
+    <label><input type="radio" name="q3" value="6"> Spaziergang durch einen Nadelwald</label>
+  </div>
+
+  <!-- Frage 4 -->
+  <div class="question">
+    <strong>4. Welche Duftintensität wünschst du dir?</strong><br>
+    <label><input type="radio" name="q4" value="1"> Intensiv und komplex</label><br>
+    <label><input type="radio" name="q4" value="2"> Schwer und exotisch</label><br>
+    <label><input type="radio" name="q4" value="3"> Unbeschwert, leicht und feminin</label><br>
+    <label><input type="radio" name="q4" value="4"> Zitrisch und aromatisch</label><br>
+    <label><input type="radio" name="q4" value="5"> Leicht und erfrischend</label><br>
+    <label><input type="radio" name="q4" value="6"> Charakterstark und elegant</label>
+  </div>
+
+  <!-- Frage 5 -->
+  <div class="question">
+    <strong>5. Zu welchem Anlass möchtest du das Parfum tragen?</strong><br>
+    <label><input type="radio" name="q5" value="1"> Magische Vollmondnacht</label><br>
+    <label><input type="radio" name="q5" value="2"> Besonderer Anlass im Winter</label><br>
+    <label><input type="radio" name="q5" value="3"> Romantischer Frühlingstag</label><br>
+    <label><input type="radio" name="q5" value="1"> Künstlerischer Ausflug</label><br>
+    <label><input type="radio" name="q5" value="2"> Kalter Wintertag, extravagant</label><br>
+    <label><input type="radio" name="q5" value="4"> Magische Sommernacht</label><br>
+    <label><input type="radio" name="q5" value="1"> Statement für dich selbst</label><br>
+    <label><input type="radio" name="q5" value="6"> Geerdet sein für Wohlfühlmomente</label>
+  </div>
+
+  <!-- Frage 6 -->
+  <div class="question">
+    <strong>6. Wie soll der Duft auf dich wirken?</strong><br>
+    <label><input type="radio" name="q6" value="1"> Sanft und selbstbewusst</label><br>
+    <label><input type="radio" name="q6" value="2"> Verführerisch, narkotisierend</label><br>
+    <label><input type="radio" name="q6" value="3"> Romantisch und zart</label><br>
+    <label><input type="radio" name="q6" value="1"> Frisch, blumig, holzig</label><br>
+    <label><input type="radio" name="q6" value="2"> Kräftig, erotisch</label><br>
+    <label><input type="radio" name="q6" value="4"> Magisch und erhebend</label><br>
+    <label><input type="radio" name="q6" value="1"> Mit deiner Kraft verbunden</label><br>
+    <label><input type="radio" name="q6" value="5"> Eigenwillig und erfrischend</label><br>
+    <label><input type="radio" name="q6" value="3"> Unbeschwert & jugendlich</label><br>
+    <label><input type="radio" name="q6" value="6"> Wärmend, edel und holzig</label>
+  </div>
+
+  <!-- Frage 7 -->
+  <div class="question">
+    <strong>7. Welche Düfte trägst du gerne?</strong><br>
+    <label><input type="radio" name="q7" value="1"> Fruchtig & geheimnisvoll</label><br>
+    <label><input type="radio" name="q7" value="1"> Leicht orientalisch & hell</label><br>
+    <label><input type="radio" name="q7" value="2"> Schwere Winterdüfte</label><br>
+    <label><input type="radio" name="q7" value="3"> Blumig & holzig</label><br>
+    <label><input type="radio" name="q7" value="4"> Zitrus & Anis</label><br>
+    <label><input type="radio" name="q7" value="3"> Blumig & grün</label><br>
+    <label><input type="radio" name="q7" value="5"> Eigenwillig & frisch</label><br>
+    <label><input type="radio" name="q7" value="6"> Würzig-Harzig & Holzbetont</label>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="primary">Duft finden</button>
+    <button type="button" class="secondary" onclick="resetQuiz()">Zurücksetzen</button>
+  </div>
+
+</form>
+
+<div id="result"></div>
+
+<script>
+document.getElementById("quiz").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  let total = 0;
+
+  for (let i = 1; i <= 7; i++) {
+    const answer = document.querySelector(`input[name="q${i}"]:checked`);
+
+    if (!answer) {
+      alert("Bitte beantworte alle Fragen.");
+      return;
+    }
+
+    total += parseInt(answer.value, 10);
+  }
+
+  let category = "";
+  let perfumes = [];
+
+  if (total > 35) {
+    category = "Holzige Düfte";
+    perfumes = ["Larix aurum"];
+  }
+  else if (total >= 7 && total <= 12) {
+    category = "Aromatische Düfte";
+    perfumes = ["Blue Moon", "Luna Bianca", "Rose of Sharon"];
+  }
+  else if (total >= 13 && total <= 16) {
+    category = "Orientalische Düfte";
+    perfumes = ["Duft der Liebe", "Mata Hari"];
+  }
+  else if (total >= 17 && total <= 23) {
+    category = "Blumige Düfte";
+    perfumes = ["La Lune Rose", "Sweet 16"];
+  }
+  else if (total >= 24 && total <= 29) {
+    category = "Zitrische Düfte";
+    perfumes = ["Perseiden"];
+  }
+  else if (total >= 30 && total <= 35) {
+    category = "Chypre Düfte";
+    perfumes = ["Sophia", "Elemi"];
+  }
+
+  const resultDiv = document.getElementById("result");
+
+  resultDiv.innerHTML = `
+    <h2>Dein Duftprofil: ${category}</h2>
+    <p><strong>Gesamtpunktzahl:</strong> ${total}</p>
+    <p><strong>Empfohlene Düfte:</strong></p>
+    <ul>
+      ${perfumes.map(p => `<li>${p}</li>`).join("")}
+    </ul>
+    <button type="button" onclick="closeResult()">Zurück zum Duftfinder</button>
+  `;
+
+  resultDiv.classList.add("show");
+  document.getElementById("quiz").classList.add("blur");
+});
+
+function resetQuiz() {
+  document.getElementById("quiz").reset();
+  document.getElementById("quiz").classList.remove("blur");
+  document.getElementById("result").classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function closeResult() {
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("quiz").classList.remove("blur");
+}
+
+document.addEventListener("click", function(event) {
+  const resultDiv = document.getElementById("result");
+
+  if (
+    resultDiv.classList.contains("show") &&
+    !resultDiv.contains(event.target)
+  ) {
+    closeResult();
+  }
+});
+</script>
+
+</body>
+</html>
